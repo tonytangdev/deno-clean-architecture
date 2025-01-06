@@ -4,7 +4,7 @@
 
 ### Tasks
 
-- [] user creation
+- [x] user creation
 - [] user update
 - [] bot creation
 - [] bot update
