@@ -19,6 +19,10 @@ export class CreateUserUseCase {
     const userExists = await this.userRepository.findByEmail(userDTO.email);
     if (userExists) throw new UserAlreadyExists();
 
-    throw new Error("Method not implemented.");
+    const now = new Date();
+    const user = UserMapper.toEntity(userDTO, now);
+    const newUser = await this.userRepository.create(user);
+
+    return newUser;
   }
 }

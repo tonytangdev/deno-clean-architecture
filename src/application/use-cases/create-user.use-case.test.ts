@@ -61,5 +61,17 @@ describe("Create User Use Case", () => {
       assert.deepStrictEqual(error, new UserAlreadyExists());
     }
   });
-  it.todo("should create a new user");
+  it("should create a new user", async () => {
+    userRepository.findByEmail = async () => undefined;
+    const user = new CreateUserDTO();
+    user.email = "test@gmail.com";
+    user.username = "test";
+    const createUserUseCase = new CreateUserUseCase(userRepository);
+
+    const newUser = await createUserUseCase.execute(user);
+    assert.ok(newUser instanceof User);
+    assert.strictEqual(newUser.getEmail(), user.email);
+    assert.strictEqual(newUser.getUsername(), user.username);
+    assert.ok(newUser.getId());
+  });
 });
