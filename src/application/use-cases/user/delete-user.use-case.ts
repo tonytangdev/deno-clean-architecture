@@ -1,6 +1,6 @@
-import { UserRepository } from "../../domain/repositories/user.repository";
-import { UserAlreadyExists } from "../errors/user-already-exists";
-import { UserNotFound } from "../errors/user-not-found";
+import { UserRepository } from "../../../domain/repositories/user.repository";
+import { UserAlreadyExists } from "../../errors/user-already-exists";
+import { UserNotFound } from "../../errors/user-not-found";
 
 export class DeleteUserUseCase {
   constructor(private readonly userRepository: UserRepository) {}

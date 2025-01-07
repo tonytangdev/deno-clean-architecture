@@ -1,12 +1,12 @@
 import assert from "assert/strict";
 import { describe, it, beforeEach, mock } from "node:test";
 import { CreateUserUseCase } from "./create-user.use-case";
-import { CreateUserInvalid } from "../errors/create-user-invalid";
-import { CreateUserDTO } from "../dto/create-user.dto";
-import { UserAlreadyExists } from "../errors/user-already-exists";
-import { User } from "../../domain/entities/user";
-import { UserRepository } from "../../domain/repositories/user.repository";
-import { UserRepositoryMock } from "./mocks/user.repository.mock";
+import { CreateUserInvalid } from "../../errors/create-user-invalid";
+import { CreateUserDTO } from "../../dto/create-user.dto";
+import { UserAlreadyExists } from "../../errors/user-already-exists";
+import { User } from "../../../domain/entities/user";
+import { UserRepository } from "../../../domain/repositories/user.repository";
+import { UserRepositoryMock } from "../mocks/user.repository.mock";
 
 describe("Create User Use Case", () => {
   let userRepository: UserRepository;
