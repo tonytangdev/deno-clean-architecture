@@ -1,4 +1,4 @@
-import { beforeEach, describe, it } from "node:test";
+import { beforeEach, describe, it, mock } from "node:test";
 import { UserRepository } from "../../domain/repositories/user.repository";
 import { User } from "../../domain/entities/user";
 import { DeleteUserUseCase } from "./delete-user.use-case";
@@ -29,11 +29,19 @@ class UserRepositoryTest implements UserRepository {
       resolve(new User(new Date(), new Date(), email, "username"));
     });
   }
+  public deleteById(id: string): Promise<void> {
+    return new Promise((resolve) => {
+      resolve();
+    });
+  }
 }
+
 describe("DeleteUserUseCase", () => {
   let userRepository: UserRepository;
+  let deleteByIdSpy = mock.fn();
 
   beforeEach(() => {
+    mock.reset();
     userRepository = new UserRepositoryTest();
   });
 
@@ -49,5 +57,14 @@ describe("DeleteUserUseCase", () => {
       assert.deepStrictEqual(error, new UserAlreadyExists());
     }
   });
-  it.todo("should delete a user");
+  it("should delete a user", async () => {
+    mock.method(UserRepositoryTest.prototype, "findById", deleteByIdSpy);
+
+    const userId = "123";
+    const deleteUserUseCase = new DeleteUserUseCase(userRepository);
+
+    await deleteUserUseCase.execute(userId);
+    assert.ok(deleteByIdSpy.mock.calls.length === 1);
+    assert.deepStrictEqual(deleteByIdSpy.mock.calls[0].arguments[0], userId);
+  });
 });

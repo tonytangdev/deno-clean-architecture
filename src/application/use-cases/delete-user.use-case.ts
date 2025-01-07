@@ -5,11 +5,11 @@ export class DeleteUserUseCase {
   constructor(private readonly userRepository: UserRepository) {}
 
   async execute(userId: string): Promise<void> {
-    const user = this.userRepository.findById(userId);
+    const user = await this.userRepository.findById(userId);
     if (!!user) {
       throw new UserAlreadyExists();
     }
 
-    throw new Error("Not implemented");
+    await this.userRepository.deleteById(userId);
   }
 }
