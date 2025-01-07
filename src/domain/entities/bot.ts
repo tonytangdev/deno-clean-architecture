@@ -3,10 +3,10 @@ import { User } from "./user";
 export class Bot {
   constructor(
     private readonly user: User,
-    private readonly id: string,
     private readonly createdAt: Date,
     private readonly updatedAt: Date,
     private readonly prompt: string,
+    private readonly id?: string,
     private readonly deletedAt?: Date
   ) {}
 
