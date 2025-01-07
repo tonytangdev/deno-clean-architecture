@@ -6,7 +6,7 @@
 
 - [x] user creation
 - [x] user update
-- [] bot creation
+- [x] bot creation
 - [] bot update
 - [] messaging platform creation
 - [] messaging platform start
