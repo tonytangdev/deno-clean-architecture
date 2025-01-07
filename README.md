@@ -5,7 +5,7 @@
 ### Tasks
 
 - [x] user creation
-- [] user update
+- [x] user update
 - [] bot creation
 - [] bot update
 - [] messaging platform creation
