@@ -3,6 +3,7 @@ import { BotRepository } from "../../../domain/repositories/bot.repository";
 import { UserRepository } from "../../../domain/repositories/user.repository";
 import { CreateBotDTO } from "../../dto/create-bot.dto";
 import { UserNotFound } from "../../errors/user-not-found";
+import { BotMapper } from "../../mappers/bot.mapper";
 
 export class CreateBotUseCase {
   constructor(
@@ -11,10 +12,13 @@ export class CreateBotUseCase {
   ) {}
 
   public async execute(botDTO: CreateBotDTO): Promise<Bot> {
-    const user = this.userRepository.findById(botDTO.userId);
+    const user = await this.userRepository.findById(botDTO.userId);
     if (!user) {
       throw new UserNotFound();
     }
+
+    const bot = BotMapper.toEntity(botDTO, user, new Date());
+    await this.botRepository.create(bot);
 
     throw new Error("Not implemented");
   }

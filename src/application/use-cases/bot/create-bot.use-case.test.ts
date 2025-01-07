@@ -7,6 +7,7 @@ import { CreateBotDTO } from "../../dto/create-bot.dto";
 import { UserRepositoryMock } from "../mocks/user.repository.mock";
 import { UserRepository } from "../../../domain/repositories/user.repository";
 import { BotRepository } from "../../../domain/repositories/bot.repository";
+import { Bot } from "../../../domain/entities/bot";
 
 describe("Create Bot Use Case", () => {
   let userRepository: UserRepository;
@@ -57,11 +58,34 @@ describe("Create Bot Use Case", () => {
       await createBotUseCase.execute(botDTO);
       assert.fail("An error should have been thrown");
     } catch (error) {
+      assert.ok(error instanceof Error);
+      assert.strictEqual(error, expectedError);
+    }
+  });
+  it("should throw an error when the bot repository throws an error", async () => {
+    const expectedError = new Error();
+    mock.method(BotRepositoryMock.prototype, "create", (bot: Bot) => {
+      console.log({ bot });
+      throw expectedError;
+    });
+
+    const userId = "123";
+    const botDTO = new CreateBotDTO();
+    botDTO.prompt = "prompt";
+    botDTO.userId = userId;
+    const createBotUseCase = new CreateBotUseCase(
+      userRepository,
+      botRepository
+    );
+
+    try {
+      await createBotUseCase.execute(botDTO);
+      assert.fail("An error should have been thrown");
+    } catch (error) {
       console.log({ error });
       assert.ok(error instanceof Error);
       assert.strictEqual(error, expectedError);
     }
   });
-  it.todo("should throw an error when the bot repository throws an error");
   it.todo("should create a new bot");
 });
