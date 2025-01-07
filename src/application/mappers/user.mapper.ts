@@ -1,4 +1,4 @@
-import { CreateUserDTO } from "../dto/create-user.dto";
+import { CreateUserDTO } from "../dto/users/create-user.dto";
 import { User } from "../../domain/entities/user";
 
 export class UserMapper {

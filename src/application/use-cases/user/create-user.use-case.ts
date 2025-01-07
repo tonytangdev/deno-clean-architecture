@@ -1,8 +1,8 @@
 import { validateOrReject } from "class-validator";
 import { User } from "../../../domain/entities/user";
-import { CreateUserDTO } from "../../dto/create-user.dto";
-import { CreateUserInvalid } from "../../errors/create-user-invalid";
-import { UserAlreadyExists } from "../../errors/user-already-exists";
+import { CreateUserDTO } from "../../dto/users/create-user.dto";
+import { CreateUserInvalid } from "../../errors/users/create-user-invalid";
+import { UserAlreadyExists } from "../../errors/users/user-already-exists";
 import { UserRepository } from "../../../domain/repositories/user.repository";
 import { UserMapper } from "../../mappers/user.mapper";
 

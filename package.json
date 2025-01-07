@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "glob -c \"node --import tsx --no-warnings --test\" \"./**/*.test.ts\""
+    "test": "glob -c \"node --import tsx --no-warnings --test\" \"./**/*.test.ts\"",
+    "test:only": "glob -c \"node --import tsx --no-warnings --test-only --test\" \"./**/*.test.ts\""
   },
   "keywords": [],
   "author": "",

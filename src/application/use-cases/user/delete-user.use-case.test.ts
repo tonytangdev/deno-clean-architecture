@@ -3,7 +3,7 @@ import { UserRepository } from "../../../domain/repositories/user.repository";
 import { DeleteUserUseCase } from "./delete-user.use-case";
 import assert from "node:assert";
 import { UserRepositoryMock } from "../mocks/user.repository.mock";
-import { UserNotFound } from "../../errors/user-not-found";
+import { UserNotFound } from "../../errors/users/user-not-found";
 import { User } from "../../../domain/entities/user";
 
 describe("DeleteUserUseCase", () => {

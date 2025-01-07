@@ -1,8 +1,8 @@
 import { Bot } from "../../../domain/entities/bot";
 import { BotRepository } from "../../../domain/repositories/bot.repository";
 import { UserRepository } from "../../../domain/repositories/user.repository";
-import { CreateBotDTO } from "../../dto/create-bot.dto";
-import { UserNotFound } from "../../errors/user-not-found";
+import { CreateBotDTO } from "../../dto/bots/create-bot.dto";
+import { UserNotFound } from "../../errors/users/user-not-found";
 import { BotMapper } from "../../mappers/bot.mapper";
 
 export class CreateBotUseCase {

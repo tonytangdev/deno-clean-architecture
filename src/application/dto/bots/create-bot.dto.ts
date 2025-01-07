@@ -1,4 +1,4 @@
-import { User } from "../../domain/entities/user";
+import { User } from "../../../domain/entities/user";
 
 export class CreateBotDTO {
   userId: User["id"];

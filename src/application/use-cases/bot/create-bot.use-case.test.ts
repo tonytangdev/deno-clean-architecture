@@ -1,9 +1,9 @@
 import { beforeEach, describe, it, mock } from "node:test";
 import assert from "node:assert";
-import { UserNotFound } from "../../errors/user-not-found";
+import { UserNotFound } from "../../errors/users/user-not-found";
 import { CreateBotUseCase } from "./create-bot.use-case";
 import { BotRepositoryMock } from "../mocks/bot.repository.mock";
-import { CreateBotDTO } from "../../dto/create-bot.dto";
+import { CreateBotDTO } from "../../dto/bots/create-bot.dto";
 import { UserRepositoryMock } from "../mocks/user.repository.mock";
 import { UserRepository } from "../../../domain/repositories/user.repository";
 import { BotRepository } from "../../../domain/repositories/bot.repository";
