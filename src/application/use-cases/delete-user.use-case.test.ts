@@ -1,40 +1,9 @@
 import { beforeEach, describe, it, mock } from "node:test";
 import { UserRepository } from "../../domain/repositories/user.repository";
-import { User } from "../../domain/entities/user";
 import { DeleteUserUseCase } from "./delete-user.use-case";
 import assert from "node:assert";
 import { UserAlreadyExists } from "../errors/user-already-exists";
-
-class UserRepositoryTest implements UserRepository {
-  public create(user: User): Promise<User> {
-    return new Promise((resolve) => {
-      const id = "id";
-      const newUser = new User(
-        user.getCreatedAt(),
-        user.getUpdatedAt(),
-        user.getEmail(),
-        user.getUsername(),
-        id
-      );
-      resolve(newUser);
-    });
-  }
-  public findById(id: string): Promise<User | undefined> {
-    return new Promise((resolve) => {
-      resolve(new User(new Date(), new Date(), "email@gmail.com", "username"));
-    });
-  }
-  public findByEmail(email: string): Promise<User | undefined> {
-    return new Promise((resolve) => {
-      resolve(new User(new Date(), new Date(), email, "username"));
-    });
-  }
-  public deleteById(id: string): Promise<void> {
-    return new Promise((resolve) => {
-      resolve();
-    });
-  }
-}
+import { UserRepositoryMock } from "./mocks/user.repository.mock";
 
 describe("DeleteUserUseCase", () => {
   let userRepository: UserRepository;
@@ -42,7 +11,7 @@ describe("DeleteUserUseCase", () => {
 
   beforeEach(() => {
     mock.reset();
-    userRepository = new UserRepositoryTest();
+    userRepository = new UserRepositoryMock();
   });
 
   it("should throw an error if the user does not exist", async () => {
@@ -58,7 +27,7 @@ describe("DeleteUserUseCase", () => {
     }
   });
   it("should delete a user", async () => {
-    mock.method(UserRepositoryTest.prototype, "findById", deleteByIdSpy);
+    mock.method(UserRepositoryMock.prototype, "findById", deleteByIdSpy);
 
     const userId = "123";
     const deleteUserUseCase = new DeleteUserUseCase(userRepository);

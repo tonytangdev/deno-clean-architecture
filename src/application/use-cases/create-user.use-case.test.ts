@@ -6,38 +6,13 @@ import { CreateUserDTO } from "../dto/create-user.dto";
 import { UserAlreadyExists } from "../errors/user-already-exists";
 import { User } from "../../domain/entities/user";
 import { UserRepository } from "../../domain/repositories/user.repository";
-
-class UserRepositoryTest implements UserRepository {
-  public create(user: User): Promise<User> {
-    return new Promise((resolve) => {
-      const id = "id";
-      const newUser = new User(
-        user.getCreatedAt(),
-        user.getUpdatedAt(),
-        user.getEmail(),
-        user.getUsername(),
-        id
-      );
-      resolve(newUser);
-    });
-  }
-  public findById(id: string): Promise<User | undefined> {
-    return new Promise((resolve) => {
-      resolve(new User(new Date(), new Date(), "email@gmail.com", "username"));
-    });
-  }
-  public findByEmail(email: string): Promise<User | undefined> {
-    return new Promise((resolve) => {
-      resolve(new User(new Date(), new Date(), email, "username"));
-    });
-  }
-}
+import { UserRepositoryMock } from "./mocks/user.repository.mock";
 
 describe("Create User Use Case", () => {
   let userRepository: UserRepository;
 
   beforeEach(() => {
-    userRepository = new UserRepositoryTest();
+    userRepository = new UserRepositoryMock();
   });
 
   it("should throw an error when the user is invalid", async () => {
