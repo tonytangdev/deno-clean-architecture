@@ -1,4 +1,4 @@
-import { before, beforeEach, describe, it, mock } from "node:test";
+import { beforeEach, describe, it, mock } from "node:test";
 import assert from "node:assert";
 import { UserNotFound } from "../../errors/user-not-found";
 import { CreateBotUseCase } from "./create-bot.use-case";
@@ -8,6 +8,7 @@ import { UserRepositoryMock } from "../mocks/user.repository.mock";
 import { UserRepository } from "../../../domain/repositories/user.repository";
 import { BotRepository } from "../../../domain/repositories/bot.repository";
 import { Bot } from "../../../domain/entities/bot";
+import { User } from "../../../domain/entities/user";
 
 describe("Create Bot Use Case", () => {
   let userRepository: UserRepository;
@@ -65,7 +66,6 @@ describe("Create Bot Use Case", () => {
   it("should throw an error when the bot repository throws an error", async () => {
     const expectedError = new Error();
     mock.method(BotRepositoryMock.prototype, "create", (bot: Bot) => {
-      console.log({ bot });
       throw expectedError;
     });
 
@@ -87,5 +87,27 @@ describe("Create Bot Use Case", () => {
       assert.strictEqual(error, expectedError);
     }
   });
-  it.todo("should create a new bot");
+  it("should create a new bot", async () => {
+    const userId = "123";
+    const userEmail = "email@test.com";
+    const username = "test";
+    mock.method(UserRepositoryMock.prototype, "findById", () => {
+      return new User(new Date(), new Date(), userEmail, username, userId);
+    });
+
+    const botDTO = new CreateBotDTO();
+    botDTO.prompt = "prompt";
+    botDTO.userId = userId;
+    const createBotUseCase = new CreateBotUseCase(
+      userRepository,
+      botRepository
+    );
+
+    const bot = await createBotUseCase.execute(botDTO);
+
+    assert.ok(bot instanceof Bot);
+    assert.ok(bot.getId());
+    assert.deepStrictEqual(bot.getUser().getId(), userId);
+    assert.strictEqual(bot.getPrompt(), "prompt");
+  });
 });

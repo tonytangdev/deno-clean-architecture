@@ -18,8 +18,6 @@ export class CreateBotUseCase {
     }
 
     const bot = BotMapper.toEntity(botDTO, user, new Date());
-    await this.botRepository.create(bot);
-
-    throw new Error("Not implemented");
+    return await this.botRepository.create(bot);
   }
 }
