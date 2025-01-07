@@ -21,6 +21,11 @@ class UserRepositoryTest implements UserRepository {
       resolve(newUser);
     });
   }
+  public findById(id: string): Promise<User | undefined> {
+    return new Promise((resolve) => {
+      resolve(new User(new Date(), new Date(), "email@gmail.com", "username"));
+    });
+  }
   public findByEmail(email: string): Promise<User | undefined> {
     return new Promise((resolve) => {
       resolve(new User(new Date(), new Date(), email, "username"));
