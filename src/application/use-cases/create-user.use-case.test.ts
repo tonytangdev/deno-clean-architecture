@@ -1,5 +1,5 @@
 import assert from "assert/strict";
-import { describe, it, beforeEach } from "node:test";
+import { describe, it, beforeEach, mock } from "node:test";
 import { CreateUserUseCase } from "./create-user.use-case";
 import { CreateUserInvalid } from "../errors/create-user-invalid";
 import { CreateUserDTO } from "../dto/create-user.dto";
@@ -42,7 +42,11 @@ describe("Create User Use Case", () => {
     }
   });
   it("should create a new user", async () => {
-    userRepository.findByEmail = async () => undefined;
+    const findByEmailMock = mock.fn(() => {
+      return undefined;
+    });
+    mock.method(UserRepositoryMock.prototype, "findByEmail", findByEmailMock);
+
     const user = new CreateUserDTO();
     user.email = "test@gmail.com";
     user.username = "test";
@@ -53,5 +57,25 @@ describe("Create User Use Case", () => {
     assert.strictEqual(newUser.getEmail(), user.email);
     assert.strictEqual(newUser.getUsername(), user.username);
     assert.ok(newUser.getId());
+  });
+
+  it("should throw an error when the repository throws an error", async () => {
+    const expectedError = new Error();
+    const createUserMock = mock.fn(() => {
+      throw expectedError;
+    });
+    mock.method(UserRepositoryMock.prototype, "create", createUserMock);
+
+    const user = new CreateUserDTO();
+    user.email = "test@gmail.com";
+    user.username = "test";
+    const createUserUseCase = new CreateUserUseCase(userRepository);
+    try {
+      await createUserUseCase.execute(user);
+      assert.fail("An error should have been thrown");
+    } catch (error) {
+      assert.ok(error instanceof Error);
+      assert.deepStrictEqual(error, expectedError);
+    }
   });
 });
