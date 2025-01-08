@@ -7,11 +7,13 @@
 - [x] user creation
 - [x] user update
 - [x] bot creation
-- [] bot update
+- [x] bot update
+- [] list user's bots
 - [] messaging platform creation
 - [] messaging platform start
 - [] messaging platform paring
 - [] messaging platform stop
+- [] list bot's messaging platforms
 - [] read message and generate response
 - [] send response
 
