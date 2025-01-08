@@ -41,4 +41,23 @@ export class BotRepositoryMock extends BotRepository {
       resolve(new Bot(user, new Date(), new Date(), "prompt", id));
     });
   }
+
+  public findBotsByUserId(userId: User["id"]): Promise<Bot[]> {
+    const bots = [];
+    const user = new User(
+      new Date(),
+      new Date(),
+      "email@test.com",
+      "username",
+      userId
+    );
+
+    const bot1 = new Bot(user, new Date(), new Date(), "prompt", "1");
+    const bot2 = new Bot(user, new Date(), new Date(), "prompt", "2");
+
+    bots.push(bot1);
+    bots.push(bot2);
+
+    return new Promise((resolve) => resolve(bots));
+  }
 }
