@@ -8,7 +8,7 @@
 - [x] user update
 - [x] bot creation
 - [x] bot update
-- [] list user's bots
+- [x] list user's bots
 - [] messaging platform creation
 - [] messaging platform start
 - [] messaging platform paring
